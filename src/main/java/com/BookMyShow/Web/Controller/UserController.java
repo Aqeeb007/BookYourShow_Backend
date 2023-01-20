@@ -1,5 +1,6 @@
 package com.BookMyShow.Web.Controller;
 
+import com.BookMyShow.Web.Dto.TicketResponseDto;
 import com.BookMyShow.Web.Dto.UserRequestDto;
 import com.BookMyShow.Web.Models.User;
 import com.BookMyShow.Web.Service.UserService;
@@ -33,6 +34,11 @@ public class UserController {
     public List<User> getUsers(){
         List<User> userList = new ArrayList<>();
         return userService.getUsers();
+    }
+
+    @GetMapping("/getTicket")
+    public TicketResponseDto ticketSend(@RequestParam() Integer ticketId){
+        return userService.getTicket(ticketId);
     }
 
 }

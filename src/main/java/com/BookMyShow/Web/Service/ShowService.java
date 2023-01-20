@@ -9,6 +9,7 @@ import com.BookMyShow.Web.Repository.TheaterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,4 +75,13 @@ public class ShowService {
         showSeatRepository.saveAll(list);
         return list;
     }
+
+//    public List<Show> findShow(LocalDate start, LocalDate end){
+//         List<Show> shows = new ArrayList<>();
+//         for (Show show : showRepository.findAll())
+//         if(findByStartDateAfter(start) && findByStartDateBefore(end)){
+//             shows.add(show);
+//         }
+//         return shows;
+//    }
 }

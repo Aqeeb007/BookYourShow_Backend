@@ -2,8 +2,10 @@ package com.BookMyShow.Web.Service;
 
 import com.BookMyShow.Web.Dto.TheaterRequestDto;
 import com.BookMyShow.Web.Enums.SeatType;
+import com.BookMyShow.Web.Models.Show;
 import com.BookMyShow.Web.Models.Theater;
 import com.BookMyShow.Web.Models.TheaterSeat;
+import com.BookMyShow.Web.Repository.ShowRepository;
 import com.BookMyShow.Web.Repository.TheaterRepository;
 import com.BookMyShow.Web.Repository.TheaterSeatsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,11 @@ public class TheaterService {
 
     @Autowired
     TheaterSeatsRepository theaterSeatsRepository;
+
+    @Autowired
+    ShowRepository showRepository;
+
+
 
     public String createTheater(TheaterRequestDto theaterRequestDto){
         Theater theater = Theater.builder().name(theaterRequestDto.getName()).city(theaterRequestDto.getCity()).address(theaterRequestDto.getAddress()).build();
@@ -57,5 +64,18 @@ public class TheaterService {
 
         theaterSeatsRepository.saveAll(theaterSeatList);
         return theaterSeatList;
+    }
+
+    public List<String> findTheaters(){
+        List<String> theaters = new ArrayList<>();
+        List<Show> showList =showRepository.findAll();
+
+        for (Show show : showList){
+            String theater = show.getTheater().getName();
+            if (theaters.contains(theater))
+                continue;
+            theaters.add(theater);
+        }
+        return theaters;
     }
 }

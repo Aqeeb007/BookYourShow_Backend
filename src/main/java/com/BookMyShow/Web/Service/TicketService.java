@@ -2,10 +2,7 @@ package com.BookMyShow.Web.Service;
 
 import com.BookMyShow.Web.Dto.TicketRequestDto;
 import com.BookMyShow.Web.Models.*;
-import com.BookMyShow.Web.Repository.MovieRepository;
-import com.BookMyShow.Web.Repository.ShowRepository;
-import com.BookMyShow.Web.Repository.TicketRepository;
-import com.BookMyShow.Web.Repository.UserRepository;
+import com.BookMyShow.Web.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +21,11 @@ public class TicketService {
 
     @Autowired
     TicketRepository ticketRepository;
+
+    @Autowired
+    ShowSeatRepository showSeatRepository;
+
+
 
     public String bookTicket(TicketRequestDto ticketRequestDto){
         List<String> requestSeats = ticketRequestDto.getSeats();
@@ -60,7 +62,7 @@ public class TicketService {
             seat.setShow(show);
 
             String seatNo = seat.getSeatNo();
-            allowedSeat += seatNo + "";
+            allowedSeat += seatNo + " ";
 
             if(seatNo.charAt(0) == '1'){
                 rate = 100;
@@ -79,5 +81,23 @@ public class TicketService {
 
         ticketRepository.save(ticket);
         return "Ticket Gendered";
+    }
+
+    public void cancelTicket(Integer ticketId){
+        Ticket ticket = ticketRepository.findById(ticketId).get();
+
+        Show show = ticket.getShow();
+
+        List<ShowSeat> showSeatList = show.getShowSeatList();
+
+        for (ShowSeat showSeat : showSeatList){
+
+            if (showSeat.isBooked() == true && showSeat.getTicket().getId() == ticketId){
+                showSeat.setBooked(false);
+                showSeat.setTicket(null);
+                showSeat.setBookedAt(null);
+            }
+        }
+        ticketRepository.deleteById(ticketId);
     }
 }
