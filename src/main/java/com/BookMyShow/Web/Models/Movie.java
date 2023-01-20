@@ -1,7 +1,10 @@
 package com.BookMyShow.Web.Models;
 
-import jakarta.persistence.*;
+//import jak.persistence.*;
+
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +14,7 @@ import java.util.List;
 @Entity
 @Table
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 
@@ -20,7 +24,7 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int duration;
-    //@Column(nullable = false,unique = true)
+    @Column(nullable = false,unique = true)
     private String name;
     private Date releaseDate;
 

@@ -1,13 +1,15 @@
 package com.BookMyShow.Web.Models;
 
 import com.BookMyShow.Web.Enums.SeatType;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 @Entity
+@Builder
 @Table(name = "show_seat")
 @Data
 @AllArgsConstructor

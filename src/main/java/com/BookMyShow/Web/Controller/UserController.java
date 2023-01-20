@@ -1,15 +1,16 @@
 package com.BookMyShow.Web.Controller;
 
 import com.BookMyShow.Web.Dto.UserRequestDto;
+import com.BookMyShow.Web.Models.User;
 import com.BookMyShow.Web.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
@@ -21,6 +22,17 @@ public class UserController {
 
         return userService.createUser(userRequestDto);
 
+    }
+
+   @GetMapping("/user")
+    public User findByName(@RequestParam String name){
+            return userService.findByName(name);
+    }
+
+    @GetMapping("/getUsers")
+    public List<User> getUsers(){
+        List<User> userList = new ArrayList<>();
+        return userService.getUsers();
     }
 
 }
